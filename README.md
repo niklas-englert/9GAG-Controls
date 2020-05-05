@@ -14,11 +14,11 @@ Available on the chrome web store. Just click [here](https://chrome.google.com/w
 - Fixed smaller CSS issues.
 
 ### v1.0.0 (2020.05.04)
-- Added a new control bar on the left.
+- Added a new control bar on the right.
 - Added volume slider. Changes will saved in browser storage and applied to all videos.
 - Added zoom button and slider. Changes will be saved in browser storage.
-- Activate controls on videos. Moved mute button and duration display to the sides so the controles aren't overlaid.
+- Activate controls on videos. Moved mute button and duration display to the sides so the controls aren't overlaid.
 - Hide various external ads (like Google AdSense embeds).
 - Hide various disruptive promotions for 9GAG's own products like their mobile apps.
-- Hide Connatix video posts. Instead a message this displayed: "9GAG Controls: Promoted video from Connatix hidden. Click to reveal."
+- Hide Connatix video posts. Instead this message is displayed: "9GAG Controls: Promoted video from Connatix hidden. Click to reveal."
 - Hide Facebook and Pinterest share buttons.
