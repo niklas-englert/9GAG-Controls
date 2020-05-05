@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "9GAG Controls",
+  "description": "Provides control functions for 9GAG.",
+  "version": "1.0.1",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://9gag.com/*",
+        "https://9gag.com/*"
+      ],
+      "js": [
+        "jquery-3.2.1.min.js",
+        "gag.js"
+      ],
+      "css": [
+        "gag.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": []
+}

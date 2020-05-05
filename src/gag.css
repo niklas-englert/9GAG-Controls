@@ -1,0 +1,150 @@
+/* REMOVED ADS */
+iframe[id*="google_ads_iframe"], /* Definitely Google AdSense */
+.block-ad .img-container, /* Container for ad iframe */
+.topBannerAd-container  /* Container for ad iframe at top */
+{
+  display: none !important;
+}
+
+/* BLURED ADS */
+iframe[src*="google"]:not(:hover) /* Probably Google AdSense */
+{
+  opacity: .1;
+  filter: blur(10px);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* REMOVED SITE FEATURES */
+.badge-sticky-button:not(:hover), /* badge on bottom-right corner to promote their app */
+.get-the-app, /* badge at end of sidenav to promote their app */
+.block-social-love, /* badge at end of sidenav to promote their social meadia */
+article .share .btn-share /* share buttons on each post */
+{
+  display: none !important;
+}
+
+/* move video mute to the left to unblock the controls */
+.video-post {
+  overflow: visible !important;
+  line-height: 0;
+}
+
+.video-post .sound-toggle {
+  right: 100% !important;
+  left: unset !important;
+  bottom: 0 !important;
+  border-radius: 50% 0 0 50% !important;
+}
+
+.video-post .length {
+  left: 100% !important;
+  right: unset !important;
+  bottom: 0 !important;
+  border-radius: 0 13px 13px 0 !important;
+}
+
+/* stop video drag on control bar drag */
+.post-container a {
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+/* article fullscreen */
+article.--ext-zoom {
+  --ext-zoom-background: rgba(32,32,32,0.7);
+  transform: scale(var(--ext-zoom, 1)) translateX(calc(var(--ext-zoom-intend, 0px) / var(--ext-zoom, 1)));
+  background-color: var(--ext-zoom-background);
+  z-index: 1000;
+  position: relative;
+  outline: calc(150vw + 50vh) var(--ext-zoom-background) solid;
+}
+
+#container {
+  overflow: visible !important;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+/* If connatix video insertions are disabled */
+.--ext-conanix {
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* move things that might be covered by the new right control bar to the left */
+.badge-scroll-to-top {
+  right: 80px !important;
+}
+
+.function-wrap {
+  right: 60px !important;
+}
+
+/* controls */
+.--ext-controls {
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  
+  width: 60px;
+  color: white !important;
+  background-color: rgba(0,0,0,1);
+  font-size: 15px !important;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.--ext-option {
+  margin: 0.5em 5px;
+}
+.--ext-value {
+  text-align: center;
+  font-size: 0.8em;
+}
+
+button.--ext-button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 2px;
+  color: white;
+  font-size: inherit !important;
+  padding: 0.3em;
+  font-size: 1.4em !important;
+  outline: none !important;
+}
+button.--ext-button:not(:disabled):hover {
+  opacity: 0.9;
+}
+
+button.--ext-button.--ext-undo {
+  background-color: white;
+  color: black;
+}
+
+input.--ext-range {
+  display: block;
+  margin-top: 0.5em;
+  -webkit-appearance: slider-vertical;
+  width: 100%;
+}
+
+/*stop clicks in zoom */
+.--ext-zoom-blocker {
+  position: fixed;
+  cursor: pointer;
+  z-index: 999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
