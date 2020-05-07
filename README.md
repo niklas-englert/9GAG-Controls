@@ -1,23 +1,33 @@
 ![banner image](/symbol/banner.png)
 
-<img src="/src/icon.png" alt="Google Inc. logo" title="9GAG Controls" align="right" height="96" width="96" />
+<img src="/src/icons/256.png" alt="Google Inc. logo" title="9GAG Controls" align="right" height="96" width="96" />
 
 # 9GAG Controls
-[![chrome version][chromeWebStoreImg]][chromeWebStore]
+[![chrome version][chromeVersionImg]][chromeWebStore]
 [![chrome users][chromeUsersImg]][chromeWebStore]
+[![firefox version][mozillaVersionImg]][mozillaAddon]
+[![firefox users][mozillaUsersImg]][mozillaAddon]
 [![issues open][issuesImg]][issues]
 
 
 A Google Chrome browser extension that tries to make your 9GAG experience better.  
 It adds **controls to video posts**, regulates the **audio volume**, **removes ads**, hides promoted content and allows you to **zoom in on posts**.
 
-Available on the chrome web store. Just click [here](https://chrome.google.com/webstore/detail/9gag-controls/ggaflcnplcdgjodokhjdefdobpdhdnjm).
+Available on the Chrome Web Store and on Firefox Add-ons. Just click:
+
+<p align="center">
+  <a href="https://chrome.google.com/webstore/detail/9gag-controls/ggaflcnplcdgjodokhjdefdobpdhdnjm"><img src="https://img.shields.io/badge/-install%20on%20Chrome-4184F4?style=for-the-badge&logo=google-chrome&logoColor=white"></a>
+  <a href="https://addons.mozilla.org/de/firefox/addon/9gag-controls/"><img src="https://img.shields.io/badge/-install%20on%20Firefox-E66000?style=for-the-badge&logo=mozilla-firefox&logoColor=white"></a>
+</p>
+
 
 
 ## Changelog
 
-### v1.0.2 (in development)
-- Icon is now round.
+### v1.1.1 (in development)
+- The extension has now **full Firefox support**. Manifest, CSS and JavaScript are adjusted to work on both platforms.
+- The icon is round now.
+- Added GPL-3.0 license to this GitHub repository.
 
 ### v1.0.1 (2020.05.05)
 - New icon image. It shows a wrench that is put on the 9GAG logo.
@@ -38,7 +48,10 @@ Available on the chrome web store. Just click [here](https://chrome.google.com/w
 
 
 [chromeWebStore]: https://chrome.google.com/webstore/detail/9gag-controls/ggaflcnplcdgjodokhjdefdobpdhdnjm
-[chromeWebStoreImg]: https://img.shields.io/chrome-web-store/v/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=latest%20version&logo=google-chrome&logoColor=white
-[chromeUsersImg]: https://img.shields.io/chrome-web-store/users/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=users&logo=google-chrome&logoColor=white
+[chromeVersionImg]: https://img.shields.io/chrome-web-store/v/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=chrome%20version&logo=google-chrome&logoColor=white
+[chromeUsersImg]: https://img.shields.io/chrome-web-store/users/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=chrome%20users&logo=google-chrome&logoColor=white
+[mozillaAddon]: https://addons.mozilla.org/de/firefox/addon/9gag-controls/
+[mozillaVersionImg]: https://img.shields.io/amo/v/9gag-controls?label=firefox%20version&logo=mozilla-firefox&logoColor=white
+[mozillaUsersImg]: https://img.shields.io/amo/users/9gag-controls?label=firefox%20users&logo=mozilla-firefox&logoColor=white
 [issues]: https://github.com/niklas-englert/9GAG-Controls/issues
 [issuesImg]: https://img.shields.io/github/issues/niklas-englert/9GAG-Controls
