@@ -20,14 +20,16 @@ Available on the Chrome Web Store and on Firefox Add-ons. Just click:
   <a href="https://addons.mozilla.org/de/firefox/addon/9gag-controls/"><img src="https://img.shields.io/badge/-install%20on%20Firefox-E66000?style=for-the-badge&logo=mozilla-firefox&logoColor=white"></a>
 </p>
 
-
+<br><br>
 
 ## Changelog
 
-### v1.1.1 (in development)
+### v1.1.1 (2020.05.07)
 - The extension has now **full Firefox support**. Manifest, CSS and JavaScript are adjusted to work on both platforms.
 - The icon is round now.
 - Added GPL-3.0 license to this GitHub repository.
+
+#### v1.1.0 (no release / unstable)
 
 ### v1.0.1 (2020.05.05)
 - New icon image. It shows a wrench that is put on the 9GAG logo.
