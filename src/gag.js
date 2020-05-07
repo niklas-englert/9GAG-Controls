@@ -10,7 +10,23 @@ var update = () => {
     video.volume = volume;
     video.dataset.volume = volume;
     video.controls = true;
+    // fixing firefox playing policy: firefox don't tell you click events.
+    if (!!navigator.userAgent.search('Firefox')) {
+      video.addEventListener('pause', function(evt) {
+        let thisVideo = evt.target;
+        let currentArticle = getCurrentArticle();
+        let currentVideo = $('video', currentArticle)[0];
+        // not clicked
+        if (thisVideo !== currentVideo) return;
+        if (thisVideo.muted) {
+          $('.sound-toggle', currentArticle).click();
+          thisVideo.play();
+        }
+      })
+    }
   }
+  // disable drag for video post
+  $('.post-container a:not([draggable])').attr('draggable', 'false');
 
   // remove Connatix posts
   $('.post-container>*>cnx:not(.--ext-detected), .post-container>cnx:not(.--ext-detected)').each((_, elem) => {
