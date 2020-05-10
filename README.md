@@ -10,7 +10,7 @@
 [![issues open][issuesImg]][issues]
 
 
-A Google Chrome browser extension that tries to make your 9GAG experience better.  
+A browser extension that tries to make your 9GAG experience better.  
 It adds **controls to video posts**, regulates the **audio volume**, **removes ads**, hides promoted content and allows you to **zoom in on posts**.
 
 Available on the Chrome Web Store and on Firefox Add-ons. Just click:
@@ -24,20 +24,26 @@ Available on the Chrome Web Store and on Firefox Add-ons. Just click:
 
 ## Changelog
 
-### v1.1.1 (2020.05.07)
+### v1.1.2 (in development)
+- Hide all promoted video posts (not just Connatix video posts). Instead a message is displayed: "[9GAG Controls has blocked this post. Click here to reveal.]"
+- Posts can be downloaded as JPEG or MP4 via the context menu opened with a right click. Video posts have to be right clicked on the controls at the bottom. Clicking the center will not work, because an invisible mute/unmute area is stretched over the video.
+- Changes to the settings like volume and zoom now synchronize between tabs.
+- Fix: Muted video unmute themselves and play if the tab is changed.
+
+### v1.1.1 (2020.05.07) “release on Firefox Add-ons”
 - The extension has now **full Firefox support**. Manifest, CSS and JavaScript are adjusted to work on both platforms.
 - The icon is round now.
 - Added GPL-3.0 license to this GitHub repository.
 
 #### v1.1.0 (no release / unstable)
 
-### v1.0.1 (2020.05.05)
+### v1.0.1 (2020.05.05) “release on Chrome Web Store”
 - New icon image. It shows a wrench that is put on the 9GAG logo.
 - Started this GitHub repository.
 - Moved elements overlaid by the right control bar to the left.
 - Fixed smaller CSS issues.
 
-### v1.0.0 (2020.05.04)
+### v1.0.0 (2020.05.04) “beta phase finished”
 - Added a new control bar on the right.
 - Added volume slider. Changes will saved in browser storage and applied to all videos.
 - Added zoom button and slider. Changes will be saved in browser storage.

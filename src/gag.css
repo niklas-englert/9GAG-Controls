@@ -69,7 +69,11 @@ body {
 }
 
 /* If connatix video insertions are disabled */
-.--ext-conanix {
+.--ext-blocked>* {
+  display: none !important;
+}
+.--ext-blocked>.--ext-blocked-msg {
+  display: block !important;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
@@ -159,6 +163,17 @@ input.--ext-range {
     -webkit-appearance: slider-vertical;
     width: 100%;
   }
+}
+
+/* video cover */
+.video-post::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px;
 }
 
 /*stop clicks in zoom */

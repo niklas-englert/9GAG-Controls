@@ -10,40 +10,45 @@ var update = () => {
     video.volume = volume;
     video.dataset.volume = volume;
     video.controls = true;
-    // fixing firefox playing policy: firefox don't tell you click events.
-    if (!!navigator.userAgent.search('Firefox')) {
-      video.addEventListener('pause', function(evt) {
-        let thisVideo = evt.target;
-        let currentArticle = getCurrentArticle();
-        let currentVideo = $('video', currentArticle)[0];
-        // not clicked
-        if (thisVideo !== currentVideo) return;
-        if (thisVideo.muted) {
-          $('.sound-toggle', currentArticle).click();
-          thisVideo.play();
-        }
-      })
-    }
   }
   // disable drag for video post
   $('.post-container a:not([draggable])').attr('draggable', 'false');
 
-  // remove Connatix posts
-  $('.post-container>*>cnx:not(.--ext-detected), .post-container>cnx:not(.--ext-detected)').each((_, elem) => {
-    const parent = elem.parentElement;
-    $(elem).addClass('--ext-detected').hide();
-    var $blockMsg = $('<div class="--ext-conanix">[9GAG Controls: Promoted video from Connatix hidden. Click to reveal.]</div>');
-    $(parent).append($blockMsg);
-    $blockMsg.click(() => {
-      $blockMsg.remove();
-      $(elem).show().slideDown();
+  // find promoted post
+  var promotetArticles = [...document.querySelectorAll('article:not(.--ext-detected) .message>a[href^="javascript:"]')]
+    .filter(elem => elem.textContent.match(/Promoted/))
+    .map(elem => {
+      while (elem) {
+        elem = elem.parentElement;
+        if (elem.tagName === 'ARTICLE') return elem;
+      }
     });
-  });
+  for (let article of promotetArticles) {
+    article.dataset.blocked = 'Post from the section "Promoted"';
+  }
 
-  // find promoted articles
-  // [...$('article .message>a[href^="javascript:"]')].map(elem => elem.textContent.trim() == 'Promoted')
+  // find unlisted posts and ads covered in posts like connatix
+  var unlistedArticles = [...document.querySelectorAll('article:not([id]):not(.--ext-detected)')];
+  for (let article of unlistedArticles) {
+    article.dataset.blocked = 'Post has no ID, so it is probably an ad.';
+  }
 
-  // remove video sources like webm or other weird non-mp4 
+  // hide posts
+  for (let article of [...promotetArticles, ...unlistedArticles]) {
+    let $blockMsg = $(
+        '<div class="--ext-blocked-msg">[9GAG Controls has blocked this post. Click here to reveal.]<br>' +
+        'Reason: ' + article.dataset.blocked + '</div>')
+      .click(() => {
+        $blockMsg.remove();
+        $(article).removeClass('--ext-blocked');
+      });
+    $(article)
+      .addClass('--ext-detected')
+      .addClass('--ext-blocked')
+      .append($blockMsg);
+  }
+
+  // remove video sources like webm or other weird non-mp4
   try {
     $('.post-container video>source[src^="https://img-9gag-fun.9cache.com/"]:not([type="video/mp4"])').each((i, elem) => {
       elem.parentElement.classList.add('--reloadable');
@@ -83,6 +88,31 @@ function getCurrentArticle() {
   });
   return bestElem;
 }
+
+// detect changes in settings made by an other tab
+window.addEventListener('storage', evt => {
+  // stop on non-extention storage
+  if (!evt.key.startsWith('__ext_')) return;
+  // handle changes
+  switch (evt.key) {
+    // simulate volume input to apply changes
+    case '__ext_volume':
+      $('#--ext-volume-scale').val(evt.newValue * 1)[0]
+        .dispatchEvent(new Event('input', {
+          bubbles: true,
+          cancelable: true,
+        }));
+      break;
+    case '__ext_zoom':
+      // simulate zoom input to apply changes
+      $('#--ext-zoom-scale').val(evt.newValue * 1)[0]
+        .dispatchEvent(new Event('input', {
+          bubbles: true,
+          cancelable: true,
+        }));
+      break;
+  }
+}, false);
 
 // inject control html
 {
