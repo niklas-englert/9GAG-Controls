@@ -1,5 +1,6 @@
 if (localStorage.getItem('__ext_volume') == null) localStorage.setItem('__ext_volume', 0.7);
 if (localStorage.getItem('__ext_zoom') == null) localStorage.setItem('__ext_zoom', 1.5);
+if (localStorage.getItem('__ext_original_dark') == null) localStorage.setItem('__ext_original_dark', 'false');
 
 /* to apply every change */
 var update = () => {
@@ -55,9 +56,15 @@ var update = () => {
     }).remove();
   } catch (e) {}
 
-  $('video.--reloadable').removeClass('--reloadable').each((i, elem) => {
+  $('video.--reloadable').removeClass('--reloadable').each(async (i, elem) => {
     try {
-      elem.load();
+      // This part is over-complicated because of Google Chromes nasty loading policy on videos and audios. It's causing 
+      // "Uncaught (in promise) DOMException: The play() request was interrupted by a call to load()." errors otherwise.
+      let paused = elem.paused;
+      // elem.readyState
+      await elem.pause();
+      await elem.load();
+      if (!paused) elem.play();
     } catch (e) {}
   });
 
@@ -118,23 +125,31 @@ window.addEventListener('storage', evt => {
 {
   let volume = localStorage.getItem('__ext_volume') * 1;
   let zoom = localStorage.getItem('__ext_zoom') * 1;
+  let originalDark = JSON.parse(localStorage.getItem('__ext_original_dark'));
 
-  $(document.body)
+  let $body = $(document.body)
     .append(`<div class="--ext-controls">
   <div class="--ext-option" title="audio volume">
     <button id="--ext-volume-btn" class="--ext-button" disabled>${getVolumeSymbol(volume)}</button>
     <div id="--ext-volume-value" class="--ext-value">${Math.round(volume*100)}%</div>
     <input id="--ext-volume-scale" class="--ext-range" type="range" step="0.05" min="0" max="1" />
   </div>
-  <div>
   <div class="--ext-option" title="post zoom">
     <button id="--ext-zoom-btn" class="--ext-button">🔍</button>
     <div id="--ext-zoom-value" class="--ext-value">${Math.round(zoom*100)}%</div>
     <input id="--ext-zoom-scale" class="--ext-range" type="range" step="0.05" min="1" max="3" />
   </div>
+  <div class="--ext-option" title="switch back to original dark mode">
+    <label class="--ext-original-dark-switch"><input type="checkbox" id="--ext-original-dark-switch"> black</label>
+  </div>
 </div>`)
     .append(`<div class="--ext-zoom-blocker" style="display:none" title="undo zoom"></div>`)
     .css('--ext-zoom', zoom + '');
+
+  if (originalDark) {
+    $body.addClass('--ext-original-dark');
+    $('#--ext-original-dark-switch').prop('checked', true);
+  }
 
   $('#--ext-volume-scale').on('input', evt => {
     let volume = evt.target.value * 1;
@@ -162,6 +177,14 @@ window.addEventListener('storage', evt => {
     localStorage.setItem('__ext_zoom', zoom);
     $(document.body).css('--ext-zoom', zoom + '');
     $('#--ext-zoom-value').text(Math.round(zoom * 100) + '%');
+  }).val(zoom);
+
+  $('#--ext-original-dark-switch').on('input', evt => {
+    var checked = $('#--ext-original-dark-switch').prop('checked');
+    originalDark = checked;
+    if (checked) $body.addClass('--ext-original-dark');
+    else $body.removeClass('--ext-original-dark');
+    localStorage.setItem('__ext_original_dark', JSON.stringify(originalDark));
   }).val(zoom);
 
 }

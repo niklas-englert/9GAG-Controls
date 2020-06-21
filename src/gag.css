@@ -1,5 +1,6 @@
 /* REMOVED ADS */
 iframe[id*="google_ads_iframe"], /* Definitely Google AdSense */
+#sidebar-content .block-ad, /* sidebar ads */
 .block-ad .img-container, /* Container for ad iframe */
 .topBannerAd-container  /* Container for ad iframe at top */
 {
@@ -17,7 +18,8 @@ iframe[src*="google"]:not(:hover) /* Probably Google AdSense */
 
 /* REMOVED SITE FEATURES */
 .badge-sticky-button:not(:hover), /* badge on bottom-right corner to promote their app */
-.get-the-app, /* badge at end of sidenav to promote their app */
+.get-the-app, .get-the-app-banner, /* badge at end of sidenav to promote their app */
+a[href="/apps"], /*link to app */
 .block-social-love, /* badge at end of sidenav to promote their social meadia */
 article .share .btn-share /* share buttons on each post */
 {
@@ -68,6 +70,10 @@ body {
   overflow-x: hidden !important;
 }
 
+body.theme-dark:not(.--ext-original-dark) {
+  background-color: #1A1A1A;
+}
+
 /* If connatix video insertions are disabled */
 .--ext-blocked>* {
   display: none !important;
@@ -82,6 +88,11 @@ body {
 /* move things that might be covered by the new right control bar to the left */
 .badge-scroll-to-top {
   right: 80px !important;
+  bottom: 40px !important;
+}
+
+.qc-cmp-persistent-link {
+  right: 60px !important;
 }
 
 .function-wrap {
@@ -139,6 +150,16 @@ input.--ext-range {
   display: block;
   margin-top: 0.5em;
   width: 100%;
+}
+
+.--ext-original-dark-switch {
+  font-size: 11px;
+  user-select: none;
+}
+
+
+body:not(.theme-dark) .--ext-original-dark-switch {
+  display: none;
 }
 
 /* mozilla fallback style because it does not have a webkit-appearance  */
