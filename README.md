@@ -24,7 +24,7 @@ Available on the Chrome Web Store and on Firefox Add-ons. Just click:
 
 ## Changelog
 
-### v1.2.0 (in development)
+### v1.2.0 (2020.06.21) “new and better”
 - Hide all promoted video posts (not just Connatix video posts). Instead a message is displayed: "**[9GAG Controls has blocked this post. Click here to reveal.]**"
 - Updated ad-block filter: Included new "9GAG: App FREE" banner in right sidebar and "Get 9GAG app" link in left side navigation.
 - Added download button after up/down vote and comment button.
