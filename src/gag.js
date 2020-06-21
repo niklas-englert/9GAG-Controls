@@ -74,9 +74,30 @@ var update = () => {
   // calculate zoom intend
   let toMuchRight = window.innerWidth - $('.main-wrap').offset().left * 2 - 500 - 30;
   $(document.body).css('--ext-zoom-intend', toMuchRight / 2);
+
+  // add download buttons
+  $('article:not(.--ext-downloadable)').each((i, elem) => {
+    let $elem = $(elem);
+    $elem.addClass('--ext-downloadable');
+    // get filename
+    if (typeof elem.id !== 'string') return;
+    let filename = false;
+    $('picture>img', elem).each((j, img) => filename = img.src);
+    $('source[type="video/mp4"]', elem).each((j, source) => filename = source.src);
+    filename = filename.split('/').pop();
+    if (!filename) return;
+    // add download button
+    $('.post-afterbar-a>.btn-vote:last-of-type, .post-afterbar-a>.vote+.share', elem)
+      .after('<ul class="btn-vote left"><li><a title="download" class="--ext-download" href="/photo/' + filename + '" rel="nofollow" download="">Download</a></li></ul>');
+  })
 };
 setInterval(update, 100);
 
+/**
+ * Get volume symbol that shows the "loudnes".
+ * @param {Number} volume Volume percentage from 0.0 to 1.0.
+ * @return {String} Volume unicode.
+ */
 function getVolumeSymbol(volume) {
   if (volume <= 0) return '🔇';
   else if (volume < 0.5) return '🔈';
@@ -84,6 +105,10 @@ function getVolumeSymbol(volume) {
   else return '🔊';
 }
 
+/**
+ * Get current article thag that is the best in current viewport.
+ * @return {ArticleElement} The found element.
+ */
 function getCurrentArticle() {
   let bestElem, bestMiddle = Infinity;
   $('article').each((i, elem) => {
@@ -94,6 +119,20 @@ function getCurrentArticle() {
     }
   });
   return bestElem;
+}
+
+/**
+ * Communicates download request with background.js.
+ * See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/downloads/download
+ * @param {Object} options An object specifying what file you wish to download, and any other preferences you wish to set concerning the download.
+ */
+function download(options) {
+  chrome.runtime.sendMessage({
+    type: 'download_request',
+    options
+  }, function(response) {
+    console.log("Download request resolved with:", response);
+  });
 }
 
 // detect changes in settings made by an other tab
@@ -118,6 +157,12 @@ window.addEventListener('storage', evt => {
           cancelable: true,
         }));
       break;
+    case '__ext_original_dark':
+      let originalDark = JSON.parse(evt.newValue);
+      $('#--ext-original-dark-switch').prop('checked', originalDark);
+      if (originalDark) $('body').addClass('--ext-original-dark');
+      else $('body').removeClass('--ext-original-dark');
+      break;
   }
 }, false);
 
@@ -129,6 +174,7 @@ window.addEventListener('storage', evt => {
 
   let $body = $(document.body)
     .append(`<div class="--ext-controls">
+    <img title="9GAG Controls Extension" src="data:image/png;base64,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" />
   <div class="--ext-option" title="audio volume">
     <button id="--ext-volume-btn" class="--ext-button" disabled>${getVolumeSymbol(volume)}</button>
     <div id="--ext-volume-value" class="--ext-value">${Math.round(volume*100)}%</div>

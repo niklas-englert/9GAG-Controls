@@ -24,13 +24,15 @@ Available on the Chrome Web Store and on Firefox Add-ons. Just click:
 
 ## Changelog
 
-### v1.1.2 (in development)
-- Hide all promoted video posts (not just Connatix video posts). Instead a message is displayed: "[9GAG Controls has blocked this post. Click here to reveal.]"
-- Updated ad block filter: Included new "9GAG: App FREE" banner in right sidebar and "Get 9GAG app" link in left side navigation.
+### v1.2.0 (in development)
+- Hide all promoted video posts (not just Connatix video posts). Instead a message is displayed: "**[9GAG Controls has blocked this post. Click here to reveal.]**"
+- Updated ad-block filter: Included new "9GAG: App FREE" banner in right sidebar and "Get 9GAG app" link in left side navigation.
+- Added download button after up/down vote and comment button.
 - Better dark mode. Can be switched off by a checkbox at the top left corner.
 - Posts can be downloaded as JPEG or MP4 via the context menu opened with a right click. Video posts have to be right clicked on the controls at the bottom. Clicking the center will not work, because an invisible mute/unmute area is stretched over the video.
 - Changes of the settings (e.g. volume and zoom) now synchronize between tabs.
 - Moved "Manage consent" button (Cookie Management by Quantcast - GDPR Consent Solution) and scroll to top button in better positions.
+- Added logo to extension sidebar.
 - Fix: Muted video unmute themselves and play if the tab is changed.
 
 ### v1.1.1 (2020.05.07) “release on Firefox Add-ons”
