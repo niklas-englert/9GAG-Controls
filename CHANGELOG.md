@@ -1,3 +1,11 @@
+# Changelog
+
+### v1.3.0 (2020.07.17) “big screen support”
+- Added option: 9GAGs auto-play plays _only_ the one centered video. (Suggested in [#2](https://github.com/niklas-englert/9GAG-Controls/issues/2) by kelderek)
+- The width of the right control bar now grows with the width of the screen, so the controls are now more easy to operate on big screens.
+- Updated ad-block filter: Adjusted due to changes of 9GAG and Google AdSense.
+- Fixed internal error `filename.split is not a function` if the download button is pressed on a GIF.
+- Fixed smaller CSS and JavaScript issues.
 
 #### v1.2.1 (copy of v1.2.0 for Firefox because of [ this](https://discourse.mozilla.org/t/-/62570))
 

@@ -71,6 +71,14 @@ body {
   padding-right: 60px !important;
 }
 
+/* center focus highlighting to show current center play */
+article.--ext-in-center {
+  transition: 200ms ease-in background-color;
+  background-color: rgba(127, 127, 127, 0.1)  !important;
+  border-left: 15px solid transparent !important;
+  margin-left: -15px !important;
+}
+
 /* better dark mode */
 
 body.theme-dark:not(.--ext-original-dark),
@@ -106,22 +114,32 @@ body.theme-dark:not(.--ext-original-dark) #container .CS3 {
 
 /* controls */
 .--ext-controls {
+  --ext-width: 60px;
   position: fixed;
   z-index: 1001;
   top: 0;
   bottom: 0;
   right: 0;
-  
-  width: 60px;
+  width: var(--ext-width);
   color: white !important;
   background-color: rgba(0,0,0,1);
-  font-size: 15px !important;
-  
+  font-size: calc(var(--ext-width) / 4) !important;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: column;
 }
+@media only screen and (min-width: 1200px) {
+  .--ext-controls {
+    --ext-width: 65px;
+  }
+}
+@media only screen and (min-width: 1500px) {
+  .--ext-controls {
+    --ext-width: 70px;
+  }
+}
+
 .--ext-option {
   margin: 0.5em 5px;
 }
@@ -135,7 +153,7 @@ button.--ext-button {
   width: 100%;
   background-color: transparent;
   border: 1px solid white;
-  border-radius: 2px;
+  border-radius: 3px;
   color: white;
   font-size: inherit !important;
   padding: 0.3em;
@@ -157,13 +175,20 @@ input.--ext-range {
   width: 100%;
 }
 
-.--ext-original-dark-switch {
-  font-size: 11px;
+.--ext-option-switch {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: var(--ext-width);
+  flex-wrap: nowrap;
   user-select: none;
+  font-size: 0.9em;
+}
+.--ext-option-switch>input {
+  margin: 0 calc(var(--ext-width) / 20);
 }
 
-
-body:not(.theme-dark) .--ext-original-dark-switch {
+body:not(.theme-dark) .--ext-original-dark-option {
   display: none;
 }
 
@@ -173,11 +198,11 @@ body:not(.theme-dark) .--ext-original-dark-switch {
     display: block;
     position: relative;
     width: 200%;
-    height: 60px;
+    height: var(--ext-width);
     -moz-transform: rotate(270deg);
     transform: rotate(270deg);
-    left: -25px;
-    margin: 30px 0;
+    left: calc(5px - var(--ext-width) / 2);
+    margin: calc(var(--ext-width) / 2) 0;
     overflow: hidden;
   }
 }

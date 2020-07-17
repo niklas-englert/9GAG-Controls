@@ -1,6 +1,8 @@
+// If local storage wasn't set: set defaut options
 if (localStorage.getItem('__ext_volume') == null) localStorage.setItem('__ext_volume', 0.7);
 if (localStorage.getItem('__ext_zoom') == null) localStorage.setItem('__ext_zoom', 1.5);
 if (localStorage.getItem('__ext_original_dark') == null) localStorage.setItem('__ext_original_dark', 'false');
+if (localStorage.getItem('__ext_play_control') == null) localStorage.setItem('__ext_play_control', 'false');
 
 /* to apply every change */
 var update = () => {
@@ -84,12 +86,36 @@ var update = () => {
     let filename = false;
     $('picture>img', elem).each((j, img) => filename = img.src);
     $('source[type="video/mp4"]', elem).each((j, source) => filename = source.src);
+    if (!filename) return;
     filename = filename.split('/').pop();
     if (!filename) return;
     // add download button
     $('.post-afterbar-a>.btn-vote:last-of-type, .post-afterbar-a>.vote+.share', elem)
       .after('<ul class="btn-vote left"><li><a title="download" class="--ext-download" href="/photo/' + filename + '" rel="nofollow" download="">Download</a></li></ul>');
-  })
+  });
+
+  // run better autoplay: modify the auto-play feature, so only the centered video plays
+  if (playControlActive()) {
+    const article = getCurrentArticle();
+    const video = $('video', article)[0];
+    if (video) {
+      if (video.__extInCenter === false) video.play();
+      video.__extInCenter = true;
+    }
+    const isVideoPost = !!video;
+    $('video').each((i, elem) => {
+      if (elem !== video) {
+        if (!elem.paused) elem.pause();
+        elem.__extInCenter = false;
+      }
+    });
+    // update css class for center focus highlighting
+    let lastInCenter = $('article.--ext-in-center');
+    if (lastInCenter.length && lastInCenter[0] !== article) lastInCenter.removeClass('--ext-in-center');
+    $(article).addClass('--ext-in-center');
+  } else {
+    $('article.--ext-in-center').removeClass('--ext-in-center');
+  }
 };
 setInterval(update, 100);
 
@@ -119,6 +145,14 @@ function getCurrentArticle() {
     }
   });
   return bestElem;
+}
+
+/**
+ * Get the current state of the center played option.
+ * @return {Boolean} Returns true if the center play option is checked.
+ */
+function playControlActive() {
+  return localStorage.getItem('__ext_play_control') === 'true';
 }
 
 /**
@@ -158,10 +192,15 @@ window.addEventListener('storage', evt => {
         }));
       break;
     case '__ext_original_dark':
-      let originalDark = JSON.parse(evt.newValue);
-      $('#--ext-original-dark-switch').prop('checked', originalDark);
-      if (originalDark) $('body').addClass('--ext-original-dark');
-      else $('body').removeClass('--ext-original-dark');
+      {
+        let originalDark = JSON.parse(evt.newValue);
+        $('#--ext-original-dark-switch').prop('checked', originalDark);
+        if (originalDark) $('body').addClass('--ext-original-dark');
+        else $('body').removeClass('--ext-original-dark');
+      }
+      break;
+    case '__ext_play_control':
+      $('#--ext-play-control-switch').prop('checked', JSON.parse(evt.newValue));
       break;
   }
 }, false);
@@ -171,6 +210,7 @@ window.addEventListener('storage', evt => {
   let volume = localStorage.getItem('__ext_volume') * 1;
   let zoom = localStorage.getItem('__ext_zoom') * 1;
   let originalDark = JSON.parse(localStorage.getItem('__ext_original_dark'));
+  let playControl = JSON.parse(localStorage.getItem('__ext_play_control'));
 
   let $body = $(document.body)
     .append(`<div class="--ext-controls">
@@ -185,8 +225,17 @@ window.addEventListener('storage', evt => {
     <div id="--ext-zoom-value" class="--ext-value">${Math.round(zoom*100)}%</div>
     <input id="--ext-zoom-scale" class="--ext-range" type="range" step="0.05" min="1" max="3" />
   </div>
-  <div class="--ext-option" title="switch back to original dark mode">
-    <label class="--ext-original-dark-switch"><input type="checkbox" id="--ext-original-dark-switch"> black</label>
+  <div class="--ext-option" title="modify the auto-play feature, so only the centered video plays">
+    <label class="--ext-option-switch">
+      <input type="checkbox" id="--ext-play-control-switch">
+      <span>center play</span>
+    </label>
+  </div>
+  <div class="--ext-option --ext-original-dark-option" title="switch back to original dark mode">
+    <label class="--ext-option-switch">
+      <input type="checkbox" id="--ext-original-dark-switch">
+      <span>black</span>
+    </label>
   </div>
 </div>`)
     .append(`<div class="--ext-zoom-blocker" style="display:none" title="undo zoom"></div>`)
@@ -195,6 +244,9 @@ window.addEventListener('storage', evt => {
   if (originalDark) {
     $body.addClass('--ext-original-dark');
     $('#--ext-original-dark-switch').prop('checked', true);
+  }
+  if (playControl) {
+    $('#--ext-play-control-switch').prop('checked', true);
   }
 
   $('#--ext-volume-scale').on('input', evt => {
@@ -226,11 +278,15 @@ window.addEventListener('storage', evt => {
   }).val(zoom);
 
   $('#--ext-original-dark-switch').on('input', evt => {
-    var checked = $('#--ext-original-dark-switch').prop('checked');
-    originalDark = checked;
-    if (checked) $body.addClass('--ext-original-dark');
+    originalDark = $('#--ext-original-dark-switch').prop('checked');
+    if (originalDark) $body.addClass('--ext-original-dark');
     else $body.removeClass('--ext-original-dark');
     localStorage.setItem('__ext_original_dark', JSON.stringify(originalDark));
+  }).val(zoom);
+
+  $('#--ext-play-control-switch').on('input', evt => {
+    playControl = $('#--ext-play-control-switch').prop('checked');
+    localStorage.setItem('__ext_play_control', JSON.stringify(playControl));
   }).val(zoom);
 
 }
