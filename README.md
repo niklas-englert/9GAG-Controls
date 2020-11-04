@@ -17,7 +17,7 @@ Available on the Chrome Web Store and on Firefox Add-ons. Just click:
 
 <p align="center">
   <a href="https://chrome.google.com/webstore/detail/9gag-controls/ggaflcnplcdgjodokhjdefdobpdhdnjm"><img src="https://img.shields.io/badge/-install%20on%20Chrome-4184F4?style=for-the-badge&logo=google-chrome&logoColor=white"></a>
-  <a href="https://addons.mozilla.org/de/firefox/addon/9gag-controls/"><img src="https://img.shields.io/badge/-install%20on%20Firefox-E66000?style=for-the-badge&logo=mozilla-firefox&logoColor=white"></a>
+  <a href="https://addons.mozilla.org/de/firefox/addon/9gag-controls/"><img src="https://img.shields.io/badge/-install%20on%20Firefox-E66000?style=for-the-badge&logo=firefox-browser&logoColor=white"></a>
 </p>
 
 <br><br>
@@ -31,8 +31,8 @@ Visit the [releases page][releases] on GitHub or download the releases directly 
 [chromeVersionImg]: https://img.shields.io/chrome-web-store/v/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=chrome%20version&logo=google-chrome&logoColor=white&color=%23007ec6
 [chromeUsersImg]: https://img.shields.io/chrome-web-store/users/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=chrome%20users&logo=google-chrome&logoColor=white&color=%23007ec6
 [mozillaAddon]: https://addons.mozilla.org/de/firefox/addon/9gag-controls/
-[mozillaVersionImg]: https://img.shields.io/amo/v/9gag-controls?label=firefox%20version&logo=mozilla-firefox&logoColor=white&color=%23007ec6
-[mozillaUsersImg]: https://img.shields.io/amo/users/9gag-controls?label=firefox%20users&logo=mozilla-firefox&logoColor=white&color=%23007ec6
+[mozillaVersionImg]: https://img.shields.io/amo/v/9gag-controls?label=firefox%20version&logo=firefox-browser&logoColor=white&color=%23007ec6
+[mozillaUsersImg]: https://img.shields.io/amo/users/9gag-controls?label=firefox%20users&logo=firefox-browser&logoColor=white&color=%23007ec6
 [issues]: https://github.com/niklas-englert/9GAG-Controls/issues
 [issuesImg]: https://img.shields.io/github/issues/niklas-englert/9GAG-Controls?label=open%20requests
 [releases]: https://github.com/niklas-englert/9GAG-Controls/releases
