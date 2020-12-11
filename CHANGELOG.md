@@ -1,5 +1,9 @@
 # Changelog
 
+### v1.3.1 (2020.12.11) “maintaining update”
+- Removed custom Cyberpunk 2077 background and menu link, even though they were cool.
+- Fixed videos/gifs in comments that were constantly paused and cannot be played.
+
 ### v1.3.0 (2020.07.17) “big screen support”
 - Added option: 9GAGs auto-play plays _only_ the one centered video. (Suggested in [#2](https://github.com/niklas-englert/9GAG-Controls/issues/2) by kelderek)
 - The width of the right control bar now grows with the width of the screen, so the controls are now more easy to operate on big screens.

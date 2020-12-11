@@ -103,7 +103,7 @@ var update = () => {
       video.__extInCenter = true;
     }
     const isVideoPost = !!video;
-    $('video').each((i, elem) => {
+    $(':not(.img-embed)>video').each((i, elem) => {
       if (elem !== video) {
         if (!elem.paused) elem.pause();
         elem.__extInCenter = false;
