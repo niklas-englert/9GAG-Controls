@@ -1,6 +1,11 @@
 # Changelog
 
-### v1.3.1 (2020.12.11) “maintaining update”
+### v1.3.2 (2021.04.09) “maintenance update 2”
+- Removed ad banner at the top (internally called billboard).
+- Removed navigation options "Get App", "Win a PS5" and "Donate".
+- Fixed videos/gifs in comments that were constantly paused and cannot be played... again.
+
+### v1.3.1 (2020.12.11) “maintenance update”
 - Removed custom Cyberpunk 2077 background and menu link, even though they were cool.
 - Fixed videos/gifs in comments that were constantly paused and cannot be played.
 

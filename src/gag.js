@@ -104,6 +104,7 @@ var update = () => {
     }
     const isVideoPost = !!video;
     $(':not(.img-embed)>video').each((i, elem) => {
+      if (hasParentWith(elem, '.post-comment')) return;
       if (elem !== video) {
         if (!elem.paused) elem.pause();
         elem.__extInCenter = false;
@@ -167,6 +168,20 @@ function download(options) {
   }, function(response) {
     console.log("Download request resolved with:", response);
   });
+}
+
+/**
+ * Checks if any parent of an element is a match for a CSS selector.
+ * @param {HTMLElement} elem element to check.
+ * @param {string} selector CSS selector for parent.
+ * @return {boolean} true on match.
+ */
+function hasParentWith(elem, selector) {
+  while (elem.parentElement) {
+    elem = elem.parentElement;
+    if (elem.matches(selector)) return true;
+  }
+  return false;
 }
 
 // detect changes in settings made by an other tab
@@ -290,3 +305,18 @@ window.addEventListener('storage', evt => {
   }).val(zoom);
 
 }
+
+// advanced ad and feater detection
+setTimeout(() => {
+  console.log('######', document.querySelectorAll('nav a[href*="://bit.ly"]'));
+  for (const a of [...document.querySelectorAll('nav a[href*="://bit.ly"]')]) {
+    const content = a.textContent.trim().toLowerCase().replace(/[\s_]+/g, '_');
+    if (
+      content.indexOf('get_app') !== -1 ||
+      content.indexOf('win_a') !== -1 ||
+      content.indexOf('donate') !== -1
+    ) {
+      a.remove();
+    }
+  }
+}, 1500);

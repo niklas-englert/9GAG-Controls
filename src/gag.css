@@ -3,7 +3,8 @@ iframe[id*="google_ads_iframe"], /* Definitely Google AdSense */
 #sidebar-content .block-ad, /* sidebar ads */
 .block-ad .img-container, /* Container for ad iframe */
 .topBannerAd-container,  /* Container for ad iframe at top */
-.cp-background, a.cp2077 /* Cyberpunk 2077 background */
+.cp-background, a.cp2077, /* Cyberpunk 2077 background */
+.billboard /* top ad banner */
 {
   display: none !important;
 }
@@ -20,7 +21,8 @@ iframe[src*="google"]:not(:hover) /* Probably Google AdSense */
 /* REMOVED SITE FEATURES */
 .badge-sticky-button:not(:hover), /* badge on bottom-right corner to promote their app */
 .get-the-app, .get-the-app-banner, /* badge at end of sidenav to promote their app */
-a[href="/apps"], /*link to app */
+a[href="/apps"], a[href="/apps"], /* link to app */
+.nav-menu .new:after,
 .block-social-love, /* badge at end of sidenav to promote their social meadia */
 article .share .btn-share /* share buttons on each post */
 {
