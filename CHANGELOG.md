@@ -1,6 +1,6 @@
 # Changelog
 
-### v1.3.3 (2021.04.09) “maintenance update 3”
+### v1.3.3 (2021.06.22) “maintenance update 3”
 - Fixed style of download button.
 - Fixed drawer (left menu) and sticky navbar (top/trending/flash and tags) background on better dark mode.
 - Removed ad links for 9GAG's own apps and social media.
