@@ -1,5 +1,11 @@
 # Changelog
 
+### v1.3.3 (2021.04.09) “maintenance update 3”
+- Fixed style of download button.
+- Fixed drawer (left menu) and sticky navbar (top/trending/flash and tags) background on better dark mode.
+- Removed ad links for 9GAG's own apps and social media.
+- Removed navigation option "Shop".
+
 ### v1.3.2 (2021.04.09) “maintenance update 2”
 - Removed ad banner at the top (internally called billboard).
 - Removed navigation options "Get App", "Win a PS5" and "Donate".
@@ -16,7 +22,7 @@
 - Fixed internal error `filename.split is not a function` if the download button is pressed on a GIF.
 - Fixed smaller CSS and JavaScript issues.
 
-#### v1.2.1 (copy of v1.2.0 for Firefox because of [ this](https://discourse.mozilla.org/t/-/62570))
+#### v1.2.1 (copy of v1.2.0 for Firefox because of [this](https://discourse.mozilla.org/t/-/62570))
 
 ### v1.2.0 (2020.06.21) “new and better”
 - Hide all promoted video posts (not just Connatix video posts). Instead a message is displayed: "**[9GAG Controls has blocked this post. Click here to reveal.]**"

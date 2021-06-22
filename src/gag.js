@@ -91,7 +91,7 @@ var update = () => {
     if (!filename) return;
     // add download button
     $('.post-afterbar-a>.btn-vote:last-of-type, .post-afterbar-a>.vote+.share', elem)
-      .after('<ul class="btn-vote left"><li><a title="download" class="--ext-download" href="/photo/' + filename + '" rel="nofollow" download="">Download</a></li></ul>');
+      .after('<ul class="btn-vote left"><li data-v-download><a title="download post" class="--ext-download" href="/photo/' + filename + '" rel="nofollow" download="">&nbsp;&nbsp;</a></li></ul>');
   });
 
   // run better autoplay: modify the auto-play feature, so only the centered video plays
@@ -314,9 +314,10 @@ setTimeout(() => {
     if (
       content.indexOf('get_app') !== -1 ||
       content.indexOf('win_a') !== -1 ||
-      content.indexOf('donate') !== -1
+      content.indexOf('donate') !== -1 ||
+      content.indexOf('shop') !== -1
     ) {
       a.remove();
     }
   }
-}, 1500);
+}, 1200);
