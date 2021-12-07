@@ -1,7 +1,6 @@
 /* REMOVED ADS */
 iframe[id*="google_ads_iframe"], /* Definitely Google AdSense */
-#sidebar-content .block-ad, /* sidebar ads */
-.block-ad .img-container, /* Container for ad iframe */
+.block-ad, .inline-ad-container, /* Sidebar ads and container for ad iframe */
 .topBannerAd-container,  /* Container for ad iframe at top */
 .cp-background, a.cp2077, /* Cyberpunk 2077 background */
 .billboard /* top ad banner */

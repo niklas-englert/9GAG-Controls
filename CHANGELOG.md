@@ -1,5 +1,9 @@
 # Changelog
 
+### v1.3.4 (2021.12.07) “maintenance update 4”
+- On vertical post scrolls: Removed new double ad blocks that appear randomly between posts.
+- On individual posts: Removed new double ad block that appears between the end of comments and the "More posts from 9GAG" section.
+
 ### v1.3.3 (2021.06.22) “maintenance update 3”
 - Fixed style of download button.
 - Fixed drawer (left menu) and sticky navbar (top/trending/flash and tags) background on better dark mode.
