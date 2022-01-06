@@ -1,5 +1,8 @@
 # Changelog
 
+### v1.3.5 (2022.01.06) “maintenance update 5”
+- Improved performance of syncing settings between tabs.
+
 ### v1.3.4 (2021.12.07) “maintenance update 4”
 - On vertical post scrolls: Removed new double ad blocks that appear randomly between posts.
 - On individual posts: Removed new double ad block that appears between the end of comments and the "More posts from 9GAG" section.

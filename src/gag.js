@@ -4,11 +4,30 @@ if (localStorage.getItem('__ext_zoom') == null) localStorage.setItem('__ext_zoom
 if (localStorage.getItem('__ext_original_dark') == null) localStorage.setItem('__ext_original_dark', 'false');
 if (localStorage.getItem('__ext_play_control') == null) localStorage.setItem('__ext_play_control', 'false');
 
+// buffered version of localStorage.setItem
+// (inspired but probably not fixing issue #4)
+function localStorageSetItem(key, value) {
+  const timeouts = localStorageSetItem.timeouts;
+  localStorageSetItem.values.set(key, value);
+  // cancel old timeout
+  const lastTimeout = timeouts.get(key);
+  if (lastTimeout) clearTimeout(lastTimeout);
+  // start new timeout
+  timeouts.set(key, setTimeout(() => {
+    localStorage.setItem(key, value);
+    timeouts.delete(key);
+    localStorageSetItem.values.delete(key);
+  }, 750));
+}
+
+localStorageSetItem.timeouts = new Map();
+localStorageSetItem.values = new Map();
+
 /* to apply every change */
 var update = () => {
 
   // set volume and add controls
-  let volume = localStorage.getItem('__ext_volume') * 1;
+  let volume = localStorageSetItem.values.has('__ext_volume') ? localStorageSetItem.values.get('__ext_volume') : localStorage.getItem('__ext_volume') * 1;
   for (let video of document.querySelectorAll('video:not([data-volume="' + volume + '"])')) {
     video.volume = volume;
     video.dataset.volume = volume;
@@ -266,7 +285,7 @@ window.addEventListener('storage', evt => {
 
   $('#--ext-volume-scale').on('input', evt => {
     let volume = evt.target.value * 1;
-    localStorage.setItem('__ext_volume', volume);
+    localStorageSetItem('__ext_volume', volume);
     $('#--ext-volume-btn').text(getVolumeSymbol(volume));
     $('#--ext-volume-value').text(Math.round(volume * 100) + '%');
     update();
@@ -287,7 +306,7 @@ window.addEventListener('storage', evt => {
 
   $('#--ext-zoom-scale').on('input', evt => {
     let zoom = evt.target.value * 1;
-    localStorage.setItem('__ext_zoom', zoom);
+    localStorageSetItem('__ext_zoom', zoom);
     $(document.body).css('--ext-zoom', zoom + '');
     $('#--ext-zoom-value').text(Math.round(zoom * 100) + '%');
   }).val(zoom);
@@ -296,12 +315,12 @@ window.addEventListener('storage', evt => {
     originalDark = $('#--ext-original-dark-switch').prop('checked');
     if (originalDark) $body.addClass('--ext-original-dark');
     else $body.removeClass('--ext-original-dark');
-    localStorage.setItem('__ext_original_dark', JSON.stringify(originalDark));
+    localStorageSetItem('__ext_original_dark', JSON.stringify(originalDark));
   }).val(zoom);
 
   $('#--ext-play-control-switch').on('input', evt => {
     playControl = $('#--ext-play-control-switch').prop('checked');
-    localStorage.setItem('__ext_play_control', JSON.stringify(playControl));
+    localStorageSetItem('__ext_play_control', JSON.stringify(playControl));
   }).val(zoom);
 
 }
