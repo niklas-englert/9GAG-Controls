@@ -1,5 +1,10 @@
 # Changelog
 
+### v1.4.0 (2022.04.22) “Going Manifest V3”
+- Updated this extension to [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/).  
+  Firefox is still lacking support of V3 for multiple years now (although it's adaption [was announced](https://blog.mozilla.org/addons/2021/05/27/manifest-v3-update/)) while Chrome's support for V2 expires this year, forcing me to split this release in two (regular and Firefox-Edition). Get your shit together Mozilla!
+- Fixed #5: “9gag pure black gone”
+
 ### v1.3.5 (2022.01.06) “maintenance update 5”
 - Improved performance of syncing settings between tabs.
 

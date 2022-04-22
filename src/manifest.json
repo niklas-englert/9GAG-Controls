@@ -1,8 +1,8 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "9GAG Controls",
   "description": "Provides control functions for 9GAG.",
-  "version": "1.3.5",
+  "version": "1.4.0",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",

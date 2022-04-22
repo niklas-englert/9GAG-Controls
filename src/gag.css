@@ -81,13 +81,18 @@ article.--ext-in-center {
   margin-left: -15px !important;
 }
 
-/* better dark mode */
-body.theme-dark:not(.--ext-original-dark),
-body.theme-dark:not(.--ext-original-dark) .drawer,
-body.theme-dark:not(.--ext-original-dark) .sticky-navbar,
-body.theme-dark:not(.--ext-original-dark) .post-afterbar-a.in-post-top,
-body.theme-dark:not(.--ext-original-dark) #container .CS3 {
-  background-color: #1A1A1A !important;
+body.theme-dark.--ext-original-dark {
+  --palette-text-foreground: black;
+  --palette-text-background: black;
+  --palette-text-background-hover: #111;
+}
+
+body.theme-dark.--ext-original-dark,
+body.theme-dark.--ext-original-dark .drawer,
+body.theme-dark.--ext-original-dark .sticky-navbar,
+body.theme-dark.--ext-original-dark .post-afterbar-a.in-post-top,
+body.theme-dark.--ext-original-dark #container .CS3 {
+  background-color: black !important;
 }
 
 /* If connatix video insertions are disabled */
