@@ -5,8 +5,10 @@
 # 9GAG Controls
 [![chrome version][chromeVersionImg]][chromeWebStore]
 [![chrome users][chromeUsersImg]][chromeWebStore]
+[![chrome rating][chromeRatingImg]][chromeWebStore]
 [![firefox version][mozillaVersionImg]][mozillaAddon]
 [![firefox users][mozillaUsersImg]][mozillaAddon]
+[![firefox rating][mozillaRatingImg]][mozillaAddon]
 [![issues open][issuesImg]][issues]
 
 
@@ -28,11 +30,13 @@ Visit the [releases page][releases] on GitHub or download the releases directly 
 
 
 [chromeWebStore]: https://chrome.google.com/webstore/detail/9gag-controls/ggaflcnplcdgjodokhjdefdobpdhdnjm
-[chromeVersionImg]: https://img.shields.io/chrome-web-store/v/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=chrome%20version&logo=google-chrome&logoColor=white&color=%23007ec6
-[chromeUsersImg]: https://img.shields.io/chrome-web-store/users/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=chrome%20users&logo=google-chrome&logoColor=white&color=%23007ec6
+[chromeVersionImg]: https://img.shields.io/chrome-web-store/v/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=version&logo=google-chrome&logoColor=white&color=%23007ec6
+[chromeUsersImg]: https://img.shields.io/chrome-web-store/users/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=users&logo=google-chrome&logoColor=white&color=%23007ec6
+[chromeRatingImg]: https://img.shields.io/chrome-web-store/stars/ggaflcnplcdgjodokhjdefdobpdhdnjm?label=rating&logo=google-chrome&logoColor=white&color=%23007ec6
 [mozillaAddon]: https://addons.mozilla.org/de/firefox/addon/9gag-controls/
-[mozillaVersionImg]: https://img.shields.io/amo/v/9gag-controls?label=firefox%20version&logo=firefox-browser&logoColor=white&color=%23007ec6
-[mozillaUsersImg]: https://img.shields.io/amo/users/9gag-controls?label=firefox%20users&logo=firefox-browser&logoColor=white&color=%23007ec6
+[mozillaVersionImg]: https://img.shields.io/amo/v/9gag-controls?label=version&logo=firefox-browser&logoColor=white&color=%23007ec6
+[mozillaUsersImg]: https://img.shields.io/amo/users/9gag-controls?label=users&logo=firefox-browser&logoColor=white&color=%23007ec6
+[mozillaRatingImg]: https://img.shields.io/amo/stars/9gag-controls?label=rating&logo=firefox-browser&logoColor=white&color=%23007ec6
 [issues]: https://github.com/niklas-englert/9GAG-Controls/issues
 [issuesImg]: https://img.shields.io/github/issues/niklas-englert/9GAG-Controls?label=open%20requests
 [releases]: https://github.com/niklas-englert/9GAG-Controls/releases
