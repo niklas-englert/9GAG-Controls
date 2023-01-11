@@ -57,7 +57,7 @@ article .share .btn-share /* share buttons on each post */
 /* article fullscreen */
 article.--ext-zoom {
   --ext-zoom-background: rgba(32,32,32,0.7);
-  transform: scale(var(--ext-zoom, 1)) translateX(calc(var(--ext-zoom-intend, 0px) / var(--ext-zoom, 1)));
+  transform: scale(var(--ext-zoom, 1));
   background-color: var(--ext-zoom-background);
   z-index: 1000;
   position: relative;
@@ -158,6 +158,7 @@ body.theme-dark.--ext-original-dark #container .CS3 {
 
 button.--ext-button {
   display: block;
+  cursor: pointer;
   width: 100%;
   background-color: transparent;
   border: 1px solid white;

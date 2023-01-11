@@ -92,10 +92,6 @@ var update = () => {
   // remove picture sources like webp
   $('picture>source[type="image/webp"]').remove();
 
-  // calculate zoom intend
-  let toMuchRight = window.innerWidth - $('.main-wrap').offset().left * 2 - 500 - 30;
-  $(document.body).css('--ext-zoom-intend', toMuchRight / 2);
-
   // add download buttons
   $('article:not(.--ext-downloadable)').each((i, elem) => {
     let $elem = $(elem);
@@ -184,7 +180,7 @@ function download(options) {
   chrome.runtime.sendMessage({
     type: 'download_request',
     options
-  }, function(response) {
+  }, response => {
     console.log("Download request resolved with:", response);
   });
 }
@@ -225,17 +221,16 @@ window.addEventListener('storage', evt => {
           cancelable: true,
         }));
       break;
-    case '__ext_original_dark':
-      {
-        let originalDark = JSON.parse(evt.newValue);
-        $('#--ext-original-dark-switch').prop('checked', originalDark);
-        if (originalDark) $('body').addClass('--ext-original-dark');
-        else $('body').removeClass('--ext-original-dark');
-      }
-      break;
-    case '__ext_play_control':
-      $('#--ext-play-control-switch').prop('checked', JSON.parse(evt.newValue));
-      break;
+    case '__ext_original_dark': {
+      let originalDark = JSON.parse(evt.newValue);
+      $('#--ext-original-dark-switch').prop('checked', originalDark);
+      if (originalDark) $('body').addClass('--ext-original-dark');
+      else $('body').removeClass('--ext-original-dark');
+    }
+    break;
+  case '__ext_play_control':
+    $('#--ext-play-control-switch').prop('checked', JSON.parse(evt.newValue));
+    break;
   }
 }, false);
 
@@ -250,7 +245,7 @@ window.addEventListener('storage', evt => {
     .append(`<div class="--ext-controls">
     <img title="9GAG Controls Extension" src="data:image/png;base64,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" />
   <div class="--ext-option" title="audio volume">
-    <button id="--ext-volume-btn" class="--ext-button" disabled>${getVolumeSymbol(volume)}</button>
+    <button id="--ext-volume-btn" class="--ext-button">${getVolumeSymbol(volume)}</button>
     <div id="--ext-volume-value" class="--ext-value">${Math.round(volume*100)}%</div>
     <input id="--ext-volume-scale" class="--ext-range" type="range" step="0.05" min="0" max="1" />
   </div>
@@ -282,6 +277,17 @@ window.addEventListener('storage', evt => {
   if (playControl) {
     $('#--ext-play-control-switch').prop('checked', true);
   }
+
+  $('#--ext-volume-btn').click(evt => {
+    let volume = localStorageSetItem.values.has('__ext_volume') ? localStorageSetItem.values.get('__ext_volume') : localStorage.getItem('__ext_volume') * 1;
+    if (volume == 0) volume = 1;
+    else volume = 0;
+    localStorageSetItem('__ext_volume', volume);
+    $('#--ext-volume-scale').val(volume);
+    $('#--ext-volume-btn').text(getVolumeSymbol(volume));
+    $('#--ext-volume-value').text(Math.round(volume * 100) + '%');
+    update();
+  });
 
   $('#--ext-volume-scale').on('input', evt => {
     let volume = evt.target.value * 1;
@@ -325,7 +331,7 @@ window.addEventListener('storage', evt => {
 
 }
 
-// advanced ad and feater detection
+// advanced ads and feature detection
 setTimeout(() => {
   console.log('######', document.querySelectorAll('nav a[href*="://bit.ly"]'));
   for (const a of [...document.querySelectorAll('nav a[href*="://bit.ly"]')]) {
