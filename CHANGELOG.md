@@ -1,6 +1,10 @@
 # Changelog
 
-### v1.4.1 (2023.01.11) ““maintenance update 5”
+### v1.4.2 (2023.01.15) “maintenance update 6”
+- Added new option "default comments" to auto-switch the content under posts to comments and not related post – 9GAG's latest annoying change. (Closing #6)
+- Deactivated option "center play". This feature was requested in issue #2 but it keeps producing problems and is hard to maintain.
+
+### v1.4.1 (2023.01.11) “maintenance update 5”
 - Fixed a bug caused by breaking changes of the original page.
 - Volume button now mutes and unmutes the audio.
 

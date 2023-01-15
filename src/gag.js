@@ -3,6 +3,7 @@ if (localStorage.getItem('__ext_volume') == null) localStorage.setItem('__ext_vo
 if (localStorage.getItem('__ext_zoom') == null) localStorage.setItem('__ext_zoom', 1.5);
 if (localStorage.getItem('__ext_original_dark') == null) localStorage.setItem('__ext_original_dark', 'false');
 if (localStorage.getItem('__ext_play_control') == null) localStorage.setItem('__ext_play_control', 'false');
+if (localStorage.getItem('__ext_switch_to_comments') == null) localStorage.setItem('__ext_switch_to_comments', 'false');
 
 // buffered version of localStorage.setItem
 // (inspired but probably not fixing issue #4)
@@ -168,7 +169,8 @@ function getCurrentArticle() {
  * @return {Boolean} Returns true if the center play option is checked.
  */
 function playControlActive() {
-  return localStorage.getItem('__ext_play_control') === 'true';
+  return false;
+  // return localStorage.getItem('__ext_play_control') === 'true';
 }
 
 /**
@@ -227,6 +229,10 @@ window.addEventListener('storage', evt => {
       if (originalDark) $('body').addClass('--ext-original-dark');
       else $('body').removeClass('--ext-original-dark');
     }
+    case '__ext_switch_to_comments': {
+      isSwitchingToComments = JSON.parse(evt.newValue);
+      $('#--ext-switch-to-comments').prop('checked', isSwitchingToComments);
+    }
     break;
   case '__ext_play_control':
     $('#--ext-play-control-switch').prop('checked', JSON.parse(evt.newValue));
@@ -239,7 +245,17 @@ window.addEventListener('storage', evt => {
   let volume = localStorage.getItem('__ext_volume') * 1;
   let zoom = localStorage.getItem('__ext_zoom') * 1;
   let originalDark = JSON.parse(localStorage.getItem('__ext_original_dark'));
-  let playControl = JSON.parse(localStorage.getItem('__ext_play_control'));
+  // let playControl = JSON.parse(localStorage.getItem('__ext_play_control'));
+  let playControl = false;
+  let isSwitchingToComments = JSON.parse(localStorage.getItem('__ext_switch_to_comments'));
+
+  function switchToComments() {
+    if (location.hash === '#comment') return;
+    if (location.hash === '#related') return;
+    $('.post-tab-bar__tab:not(.selected):contains("Comments")').click();
+  }
+  if (isSwitchingToComments) switchToComments();
+
 
   let $body = $(document.body)
     .append(`<div class="--ext-controls">
@@ -254,10 +270,16 @@ window.addEventListener('storage', evt => {
     <div id="--ext-zoom-value" class="--ext-value">${Math.round(zoom*100)}%</div>
     <input id="--ext-zoom-scale" class="--ext-range" type="range" step="0.05" min="1" max="3" />
   </div>
-  <div class="--ext-option" title="modify the auto-play feature, so only the centered video plays">
+  <!--<div class="--ext-option" title="modify the auto-play feature, so only the centered video plays">
     <label class="--ext-option-switch">
       <input type="checkbox" id="--ext-play-control-switch">
       <span>center play</span>
+    </label>
+  </div>-->
+  <div class="--ext-option --ext-switch-to-comments-option" title="auto-switch to the comments on a post">
+    <label class="--ext-option-switch">
+      <input type="checkbox" id="--ext-switch-to-comments">
+      <span>default com-ments</span>
     </label>
   </div>
   <div class="--ext-option --ext-original-dark-option" title="switch back to original dark mode">
@@ -276,6 +298,9 @@ window.addEventListener('storage', evt => {
   }
   if (playControl) {
     $('#--ext-play-control-switch').prop('checked', true);
+  }
+  if (isSwitchingToComments) {
+    $('#--ext-switch-to-comments').prop('checked', true);
   }
 
   $('#--ext-volume-btn').click(evt => {
@@ -322,11 +347,19 @@ window.addEventListener('storage', evt => {
     if (originalDark) $body.addClass('--ext-original-dark');
     else $body.removeClass('--ext-original-dark');
     localStorageSetItem('__ext_original_dark', JSON.stringify(originalDark));
-  }).val(zoom);
+  });
 
   $('#--ext-play-control-switch').on('input', evt => {
     playControl = $('#--ext-play-control-switch').prop('checked');
     localStorageSetItem('__ext_play_control', JSON.stringify(playControl));
+  });
+
+  $('#--ext-switch-to-comments').on('input', evt => {
+    isSwitchingToComments = $('#--ext-switch-to-comments').prop('checked');
+    if (isSwitchingToComments) {
+      switchToComments();
+    }
+    localStorageSetItem('__ext_switch_to_comments', JSON.stringify(isSwitchingToComments));
   }).val(zoom);
 
 }
