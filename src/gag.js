@@ -3,7 +3,7 @@ if (localStorage.getItem('__ext_volume') == null) localStorage.setItem('__ext_vo
 if (localStorage.getItem('__ext_zoom') == null) localStorage.setItem('__ext_zoom', 1.5);
 if (localStorage.getItem('__ext_original_dark') == null) localStorage.setItem('__ext_original_dark', 'false');
 if (localStorage.getItem('__ext_play_control') == null) localStorage.setItem('__ext_play_control', 'false');
-if (localStorage.getItem('__ext_switch_to_comments') == null) localStorage.setItem('__ext_switch_to_comments', 'false');
+if (localStorage.getItem('__ext_auto_unmute') == null) localStorage.setItem('__ext_auto_unmute', 'false');
 
 // buffered version of localStorage.setItem
 // (inspired but probably not fixing issue #4)
@@ -25,11 +25,17 @@ localStorageSetItem.timeouts = new Map();
 localStorageSetItem.values = new Map();
 
 /* to apply every change */
-var update = () => {
+const update = () => {
 
   // set volume and add controls
-  let volume = localStorageSetItem.values.has('__ext_volume') ? localStorageSetItem.values.get('__ext_volume') : localStorage.getItem('__ext_volume') * 1;
-  for (let video of document.querySelectorAll('video:not([data-volume="' + volume + '"])')) {
+  const isAutoUnmuting = JSON.parse(localStorage.getItem('__ext_auto_unmute'));
+  if (isAutoUnmuting) {
+    for (const video of document.querySelectorAll('video:not([data-volume])')) {
+      video.muted = false;
+    }
+  }
+  const volume = localStorageSetItem.values.has('__ext_volume') ? localStorageSetItem.values.get('__ext_volume') : localStorage.getItem('__ext_volume') * 1;
+  for (const video of document.querySelectorAll('video:not([data-volume="' + volume + '"])')) {
     video.volume = volume;
     video.dataset.volume = volume;
     video.controls = true;
@@ -38,7 +44,7 @@ var update = () => {
   $('.post-container a:not([draggable])').attr('draggable', 'false');
 
   // find promoted post
-  var promotetArticles = [...document.querySelectorAll('article:not(.--ext-detected) .message>a[href^="javascript:"]')]
+  const promotetArticles = [...document.querySelectorAll('article:not(.--ext-detected) .message>a[href^="javascript:"]')]
     .filter(elem => elem.textContent.match(/Promoted/))
     .map(elem => {
       while (elem) {
@@ -46,19 +52,19 @@ var update = () => {
         if (elem.tagName === 'ARTICLE') return elem;
       }
     });
-  for (let article of promotetArticles) {
+  for (const article of promotetArticles) {
     article.dataset.blocked = 'Post from the section "Promoted"';
   }
 
   // find unlisted posts and ads covered in posts like connatix
-  var unlistedArticles = [...document.querySelectorAll('article:not([id]):not(.--ext-detected)')];
-  for (let article of unlistedArticles) {
+  const unlistedArticles = [...document.querySelectorAll('article:not([id]):not(.--ext-detected)')];
+  for (const article of unlistedArticles) {
     article.dataset.blocked = 'Post has no ID, so it is probably an ad.';
   }
 
   // hide posts
-  for (let article of [...promotetArticles, ...unlistedArticles]) {
-    let $blockMsg = $(
+  for (const article of [...promotetArticles, ...unlistedArticles]) {
+    const $blockMsg = $(
         '<div class="--ext-blocked-msg">[9GAG Controls has blocked this post. Click here to reveal.]<br>' +
         'Reason: ' + article.dataset.blocked + '</div>')
       .click(() => {
@@ -95,7 +101,7 @@ var update = () => {
 
   // add download buttons
   $('article:not(.--ext-downloadable)').each((i, elem) => {
-    let $elem = $(elem);
+    const $elem = $(elem);
     $elem.addClass('--ext-downloadable');
     // get filename
     if (typeof elem.id !== 'string') return;
@@ -109,30 +115,6 @@ var update = () => {
     $('.post-afterbar-a>.btn-vote:last-of-type, .post-afterbar-a>.vote+.share', elem)
       .after('<ul class="btn-vote left"><li data-v-download><a title="download post" class="--ext-download" href="/photo/' + filename + '" rel="nofollow" download="">&nbsp;&nbsp;</a></li></ul>');
   });
-
-  // run better autoplay: modify the auto-play feature, so only the centered video plays
-  if (playControlActive()) {
-    const article = getCurrentArticle();
-    const video = $('video', article)[0];
-    if (video) {
-      if (video.__extInCenter === false) video.play();
-      video.__extInCenter = true;
-    }
-    const isVideoPost = !!video;
-    $(':not(.img-embed)>video').each((i, elem) => {
-      if (hasParentWith(elem, '.post-comment')) return;
-      if (elem !== video) {
-        if (!elem.paused) elem.pause();
-        elem.__extInCenter = false;
-      }
-    });
-    // update css class for center focus highlighting
-    let lastInCenter = $('article.--ext-in-center');
-    if (lastInCenter.length && lastInCenter[0] !== article) lastInCenter.removeClass('--ext-in-center');
-    $(article).addClass('--ext-in-center');
-  } else {
-    $('article.--ext-in-center').removeClass('--ext-in-center');
-  }
 };
 setInterval(update, 100);
 
@@ -165,15 +147,6 @@ function getCurrentArticle() {
 }
 
 /**
- * Get the current state of the center played option.
- * @return {Boolean} Returns true if the center play option is checked.
- */
-function playControlActive() {
-  return false;
-  // return localStorage.getItem('__ext_play_control') === 'true';
-}
-
-/**
  * Communicates download request with background.js.
  * See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/downloads/download
  * @param {Object} options An object specifying what file you wish to download, and any other preferences you wish to set concerning the download.
@@ -185,6 +158,18 @@ function download(options) {
   }, response => {
     console.log("Download request resolved with:", response);
   });
+}
+
+function autoUnmuteChange(isAutoUnmuting) {
+  if (isAutoUnmuting) {
+    for (const video of document.querySelectorAll('video[data-volume]')) {
+      if (video.parentElement.querySelector('.sound-toggle.off')) video.muted = false;
+    }
+  } else {
+    for (const video of document.querySelectorAll('video[data-volume]')) {
+      video.muted = true;
+    }
+  }
 }
 
 /**
@@ -229,13 +214,14 @@ window.addEventListener('storage', evt => {
       if (originalDark) $('body').addClass('--ext-original-dark');
       else $('body').removeClass('--ext-original-dark');
     }
-    case '__ext_switch_to_comments': {
-      isSwitchingToComments = JSON.parse(evt.newValue);
-      $('#--ext-switch-to-comments').prop('checked', isSwitchingToComments);
+    case '__ext_auto_unmute': {
+      let isAutoUnmuting = JSON.parse(evt.newValue);
+      $('#--ext-auto-unmute').prop('checked', isAutoUnmuting);
+      autoUnmuteChange(isAutoUnmuting);
     }
     break;
-  case '__ext_play_control':
-    $('#--ext-play-control-switch').prop('checked', JSON.parse(evt.newValue));
+  case '__ext_auto_unmute':
+    $('#--ext-auto-unmute').prop('checked', JSON.parse(evt.newValue));
     break;
   }
 }, false);
@@ -245,16 +231,7 @@ window.addEventListener('storage', evt => {
   let volume = localStorage.getItem('__ext_volume') * 1;
   let zoom = localStorage.getItem('__ext_zoom') * 1;
   let originalDark = JSON.parse(localStorage.getItem('__ext_original_dark'));
-  // let playControl = JSON.parse(localStorage.getItem('__ext_play_control'));
-  let playControl = false;
-  let isSwitchingToComments = JSON.parse(localStorage.getItem('__ext_switch_to_comments'));
-
-  function switchToComments() {
-    if (location.hash === '#comment') return;
-    if (location.hash === '#related') return;
-    $('.post-tab-bar__tab:not(.selected):contains("Comments")').click();
-  }
-  if (isSwitchingToComments) switchToComments();
+  let isAutoUnmuting = JSON.parse(localStorage.getItem('__ext_auto_unmute'));
 
 
   let $body = $(document.body)
@@ -276,10 +253,10 @@ window.addEventListener('storage', evt => {
       <span>center play</span>
     </label>
   </div>-->
-  <div class="--ext-option --ext-switch-to-comments-option" title="auto-switch to the comments on a post">
+  <div class="--ext-option --ext-auto-unmute-option" title="unmute videos if scrolled into view">
     <label class="--ext-option-switch">
-      <input type="checkbox" id="--ext-switch-to-comments">
-      <span>default com-ments</span>
+      <input type="checkbox" id="--ext-auto-unmute">
+      <span>auto unmute</span>
     </label>
   </div>
   <div class="--ext-option --ext-original-dark-option" title="switch back to original dark mode">
@@ -296,11 +273,8 @@ window.addEventListener('storage', evt => {
     $body.addClass('--ext-original-dark');
     $('#--ext-original-dark-switch').prop('checked', true);
   }
-  if (playControl) {
-    $('#--ext-play-control-switch').prop('checked', true);
-  }
-  if (isSwitchingToComments) {
-    $('#--ext-switch-to-comments').prop('checked', true);
+  if (isAutoUnmuting) {
+    $('#--ext-auto-unmute').prop('checked', true);
   }
 
   $('#--ext-volume-btn').click(evt => {
@@ -354,12 +328,10 @@ window.addEventListener('storage', evt => {
     localStorageSetItem('__ext_play_control', JSON.stringify(playControl));
   });
 
-  $('#--ext-switch-to-comments').on('input', evt => {
-    isSwitchingToComments = $('#--ext-switch-to-comments').prop('checked');
-    if (isSwitchingToComments) {
-      switchToComments();
-    }
-    localStorageSetItem('__ext_switch_to_comments', JSON.stringify(isSwitchingToComments));
+  $('#--ext-auto-unmute').on('input', evt => {
+    isAutoUnmuting = $('#--ext-auto-unmute').prop('checked');
+    localStorageSetItem('__ext_auto_unmute', JSON.stringify(isAutoUnmuting));
+    autoUnmuteChange(isAutoUnmuting);
   }).val(zoom);
 
 }
