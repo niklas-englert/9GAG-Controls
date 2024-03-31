@@ -201,6 +201,11 @@ body:not(.theme-dark) .--ext-original-dark-option {
   display: none;
 }
 
+.back-to-top.show {
+	right: 90px;
+  z-index: 1005;
+}
+
 /* mozilla fallback style because it does not have a webkit-appearance  */
 @supports not (-webkit-appearance: slider-vertical) {
   input.--ext-range {

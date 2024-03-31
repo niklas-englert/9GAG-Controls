@@ -1,5 +1,8 @@
 # Changelog
 
+### v1.4.4 (2024.03.31) “fixed go-to-top button”
+- Fixed a bug causing the menu of this extension to cover 9GAG's go-to-top button.
+
 ### v1.4.3 (2024.01.20) “maintenance update 8”
 - Added new option "auto unmute" to to have videos immediately playing with sound if scrolled into view. (Closing #7)
 - Rolled back changes introduced in v1.4.2 regarding option "default comments" – 9GAG has returned to their senses a couple of months later as I predicted in issue #6.
